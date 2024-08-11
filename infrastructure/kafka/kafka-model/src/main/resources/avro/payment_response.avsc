@@ -6,31 +6,31 @@
         {
             "name": "id",
             "type": {
-                "type": "string",
+                "type": "string"
             }
         },
         {
             "name": "sagaId",
             "type": {
-                "type": "string",
+                "type": "string"
             }
         },
         {
             "name": "paymentId",
             "type": {
-                "type": "string",
+                "type": "string"
             }
         },
         {
             "name": "customerId",
             "type": {
-                "type": "string",
+                "type": "string"
             }
         },
         {
             "name": "orderId",
             "type": {
-                "type": "string",
+                "type": "string"
             }
         },
         {
