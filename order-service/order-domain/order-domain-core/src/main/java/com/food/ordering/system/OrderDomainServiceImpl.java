@@ -44,6 +44,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         itemProducts.forEach(product->{
             Product restaurantProduct = restaurantProductMap.getOrDefault(product.getId().getValue(),null);
             if(restaurantProduct!=null){
+                log.info("product: {} , price :{}",restaurantProduct.getName(),restaurantProduct.getPrice().getAmount());
                 product.updateWithConfirmedNameAndPrice(restaurantProduct.getName(),restaurantProduct.getPrice());
             }
         });

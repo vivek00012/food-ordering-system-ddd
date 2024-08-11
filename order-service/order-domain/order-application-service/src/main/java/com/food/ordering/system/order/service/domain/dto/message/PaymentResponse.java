@@ -20,7 +20,9 @@ public class PaymentResponse {
 
     private String orderId;
 
-    private String customerid;
+    private String paymentId;
+
+    private String customerId;
     private BigDecimal price;
 
     private Instant createdAt;

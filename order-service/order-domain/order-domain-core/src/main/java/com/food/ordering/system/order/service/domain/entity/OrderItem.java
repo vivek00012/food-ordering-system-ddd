@@ -4,10 +4,12 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
 //order Item is a base entity
+@Slf4j
 public class OrderItem extends BaseEntity<OrderItemId> {
     private OrderId orderId;
     private final Product product;
@@ -70,7 +72,7 @@ public class OrderItem extends BaseEntity<OrderItemId> {
         }
 
 
-        public Builder orderId(OrderItemId val) {
+        public Builder orderItemId(OrderItemId val) {
             orderItemId = val;
             return this;
         }

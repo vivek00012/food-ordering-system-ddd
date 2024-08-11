@@ -8,6 +8,7 @@ import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.entity.OrderItem;
 import com.food.ordering.system.order.service.domain.entity.Product;
@@ -42,10 +43,20 @@ public class OrderDataMapper {
                 .build();
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order){
+    public CreateOrderResponse orderToCreateOrderResponse(Order order,String message){
         return CreateOrderResponse.builder()
                 .orderTrackingId(order.getTrackingId().getValue())
                 .orderStatus(order.getOrderStatus())
+                .message(message)
+                .build();
+
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order){
+        return  TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMessages(order.getFailureMessages())
                 .build();
 
     }
@@ -61,6 +72,7 @@ public class OrderDataMapper {
                                 .build()
                 ).toList();
     }
+
 
     private StreetAddress orderAddressToStreetAddress(OrderAddress address) {
         return new StreetAddress(UUID.randomUUID(),address.getStreet(),address.getPostalCode(),address.getCity());

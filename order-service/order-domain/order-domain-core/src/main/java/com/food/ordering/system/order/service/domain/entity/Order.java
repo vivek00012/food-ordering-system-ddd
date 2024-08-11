@@ -23,6 +23,8 @@ public class Order extends AggregateRoot<OrderId> {
     private OrderStatus orderStatus;
     private List<String> failureMessages;
 
+    public static final String FAILURE_MESSAGE_DELIMITER = ",";
+
     private Order(Builder builder) {
         super.setId(builder.orderId);
         customerId = builder.customerId;
@@ -62,7 +64,8 @@ public class Order extends AggregateRoot<OrderId> {
     }
 
     private void validateItemPrice(OrderItem orderItem) {
-        if(!orderItem.isPriceValid())  throw new OrderDomainException("Order item price : "+ orderItem.getPrice().getAmount() +
+        if(!orderItem.isPriceValid())
+            throw new OrderDomainException("Order item price : "+ orderItem.getPrice().getAmount() +
                 " is not valid for product "+ orderItem.getProduct().getId().getValue());
     }
 

@@ -15,6 +15,7 @@ public class OrderCreateCommandHandler {
 
     private final OrderCreateHelper orderCreateHelper;
 
+    // usage of output port in domain application service
     private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
     private final OrderDataMapper orderDataMapper;
 
@@ -28,8 +29,8 @@ public class OrderCreateCommandHandler {
     public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand){
         OrderCreatedEvent  orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
         log.info("Order is created with id : {}",orderCreatedEvent.getOrder().getId().getValue());
-        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
-        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
+        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);//via output port
+        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),"Order created successfully");
     }
 
 
