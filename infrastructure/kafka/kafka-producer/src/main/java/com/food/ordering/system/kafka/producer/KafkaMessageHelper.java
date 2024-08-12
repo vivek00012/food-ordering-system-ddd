@@ -1,17 +1,15 @@
-package com.food.ordering.system.order.service.messaging.publisher.kafka;
+package com.food.ordering.system.kafka.producer;
 
-import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.function.BiConsumer;
 
 @Component
 @Slf4j
-public class OrderKafkaMessageHelper {
+public class KafkaMessageHelper {
 
     public <T> BiConsumer<SendResult<String, T>,Throwable> getKafkaCallback(String requestTopicName, T requestAvroModel, String orderId, String requestAvroModelName) {
 

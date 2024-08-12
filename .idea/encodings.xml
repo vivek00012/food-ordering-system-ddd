@@ -26,6 +26,16 @@
     <file url="file://$PROJECT_DIR$/order-service/order-messaging/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-application/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-container/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-dataaccess/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-domain/payment-application-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-domain/payment-domain-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/payment-messaging/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-module/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
