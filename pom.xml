@@ -98,16 +98,16 @@
                 <artifactId>kafka-config-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>saga</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--payment-service  dependencies -->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>payment-application-service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.food.ordering.system</groupId>
-                <artifactId>payment-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -134,11 +134,6 @@
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>restaurant-application-service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.food.ordering.system</groupId>
-                <artifactId>restaurant-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
