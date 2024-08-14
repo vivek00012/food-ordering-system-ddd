@@ -33,7 +33,7 @@ public class RestaurantApprovalRequestKafkaListener implements KafkaConsumer<Res
             topics = "${restaurant-service.restaurant-approval-request-topic-name}")
     public void receive(@Payload List<RestaurantApprovalRequestAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
-                        @Header(KafkaHeaders.RECEIVED) List<Integer> partitions,
+                        @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
         log.info("{} number of orders approval requests received with keys {}, partitions {} and offsets {}" +
                         ", sending for restaurant approval",
@@ -44,6 +44,8 @@ public class RestaurantApprovalRequestKafkaListener implements KafkaConsumer<Res
 
         messages.forEach(restaurantApprovalRequestAvroModel -> {
             log.info("Processing order approval for order id: {}", restaurantApprovalRequestAvroModel.getOrderId());
+            log.info("restaurant is {}",restaurantMessagingDataMapper.
+                    restaurantApprovalRequestAvroModelToRestaurantApproval(restaurantApprovalRequestAvroModel).getRestaurantId());
             restaurantApprovalRequestMessageListener.approveOrder(restaurantMessagingDataMapper.
                     restaurantApprovalRequestAvroModelToRestaurantApproval(restaurantApprovalRequestAvroModel));
         });

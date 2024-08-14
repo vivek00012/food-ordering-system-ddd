@@ -49,7 +49,7 @@ public class OrderMessagingDataMapper {
                 .setId(UUID.randomUUID().toString())
                 .setSagaId("")
                 .setOrderId(order.getId().getValue().toString())
-                .setRestaurantId(order.getId().getValue().toString())
+                .setRestaurantId(order.getRestaurantId().getValue().toString())
                 .setRestaurantOrderStatus(RestaurantOrderStatus.PAID)
                 .setProducts(order.getItems().stream().map(orderItem->
                         com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()

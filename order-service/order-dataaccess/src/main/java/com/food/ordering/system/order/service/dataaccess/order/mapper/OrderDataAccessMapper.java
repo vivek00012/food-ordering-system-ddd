@@ -47,6 +47,7 @@ public class OrderDataAccessMapper {
                 .deliveryaddress(addressEntityToDeliveryAddress(orderEntity.getAddress()))
                 .price(new Money(orderEntity.getPrice()))
                 .items(orderItemEntitiesToOrderItem(orderEntity.getItems()))
+                .orderStatus(orderEntity.getOrderStatus())
                 .trackingId(new TrackingId(orderEntity.getTrackingId()))
                 .failureMessages(orderEntity.getFailureMessages().isEmpty()?new ArrayList<>():
                         new ArrayList<>(Arrays.asList(orderEntity.getFailureMessages().split(FAILURE_MESSAGE_DELIMITER))))

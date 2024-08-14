@@ -16,6 +16,6 @@ public class OrderCancelledEvent  extends  OrderEvent {
 
     @Override
     public void fire() {
-
+        orderCancelledEventDomainEventPublisher.publish(this);
     }
 }

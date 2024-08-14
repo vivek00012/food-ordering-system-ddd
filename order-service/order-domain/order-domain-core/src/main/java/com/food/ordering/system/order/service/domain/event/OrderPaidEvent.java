@@ -14,6 +14,6 @@ public class OrderPaidEvent extends  OrderEvent  {
 
     @Override
     public void fire() {
-
+        orderPaidEventDomainEventPublisher.publish(this);
     }
 }
