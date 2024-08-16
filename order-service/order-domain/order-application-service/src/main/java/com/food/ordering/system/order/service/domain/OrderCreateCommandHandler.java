@@ -3,10 +3,13 @@ import com.food.ordering.system.order.service.domain.dto.create.CreateOrderComma
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
-import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
+import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.PaymentOutboxHelper;
+import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 
 @Component
@@ -16,22 +19,36 @@ public class OrderCreateCommandHandler {
     private final OrderCreateHelper orderCreateHelper;
 
     // usage of output port in domain application service
-    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
     private final OrderDataMapper orderDataMapper;
+    private final PaymentOutboxHelper paymentOutboxHelper;
+    private final OrderSagaHelper orderSagaHelper;
 
-    public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper, OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher, OrderDataMapper orderDataMapper) {
+    public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper, OrderDataMapper orderDataMapper, PaymentOutboxHelper paymentOutboxHelper, OrderSagaHelper orderSagaHelper) {
         this.orderCreateHelper = orderCreateHelper;
-        this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
         this.orderDataMapper = orderDataMapper;
+        this.paymentOutboxHelper = paymentOutboxHelper;
+        this.orderSagaHelper = orderSagaHelper;
     }
 
 
+    //SAGA-STATUS : STARTED ; OUTBOX-STATUS:STARTED
+    @Transactional
     public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand){
         OrderCreatedEvent  orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
         log.info("Order is created with id : {}",orderCreatedEvent.getOrder().getId().getValue());
-//        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);//via output port
-        orderCreatedEvent.fire();
-        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),"Order created successfully");
+        CreateOrderResponse createOrderResponse =  orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),"Order created successfully");
+        paymentOutboxHelper.savePaymentOutboxMessage(
+                orderDataMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
+                orderCreatedEvent.getOrder().getOrderStatus(),
+                orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
+                OutboxStatus.STARTED,
+                UUID.randomUUID()
+                );
+
+        log.info("Returning CreateOrderResponse with order id: {}",orderCreatedEvent.getOrder().getId());
+
+        return  createOrderResponse;
+
     }
 
 

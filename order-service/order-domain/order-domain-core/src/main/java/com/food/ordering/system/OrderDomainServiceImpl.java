@@ -20,13 +20,13 @@ import java.util.UUID;
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
     @Override
-    public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant, DomainEventPublisher<OrderCreatedEvent> orderCreatedEventDomainEventPublisher) {
+    public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
         validateRestaurant(restaurant);
         setOrderProductInformation(order,restaurant);
         order.validateOrder();
         order.initializeOrder();
         log.info("Order with id: {} is initiated",order.getId().getValue());
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)), orderCreatedEventDomainEventPublisher);
+        return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)));
     }
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
@@ -54,10 +54,10 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
-    public OrderPaidEvent payOrder(Order order, DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
+    public OrderPaidEvent payOrder(Order order) {
         order.pay();
         log.info("Order with id :{} is paid",order.getId().getValue());
-        return new OrderPaidEvent(order,ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)), orderPaidEventDomainEventPublisher);
+        return new OrderPaidEvent(order,ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)));
     }
 
     @Override
@@ -68,10 +68,10 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
-    public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages, DomainEventPublisher<OrderCancelledEvent> orderCancelledEventDomainEventPublisher) {
+    public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
         order.initCancel(failureMessages);
         log.info("Order payment is cancelling for order is: {}",order.getId());
-        return new OrderCancelledEvent(order,ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)), orderCancelledEventDomainEventPublisher);
+        return new OrderCancelledEvent(order,ZonedDateTime.now(ZoneId.of(DomainConstants.UTC)));
     }
 
     @Override
