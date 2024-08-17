@@ -1,10 +1,15 @@
 server:
   port: 8182
 
+#logging:
+#  level:
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    # Optionally, set the level for specific SLF4J-related packages
+    root: INFO
 
 payment-service:
   payment-request-topic-name: payment-request
@@ -13,6 +18,8 @@ payment-service:
   outbox-scheduler-initial-delay: 10000
 
 spring:
+  main:
+    banner-mode: off
   datasource:
     url: jdbc:postgresql://localhost:5432/admin?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true
     username: postgres
@@ -22,7 +29,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update  # or create, create-drop, validate
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true

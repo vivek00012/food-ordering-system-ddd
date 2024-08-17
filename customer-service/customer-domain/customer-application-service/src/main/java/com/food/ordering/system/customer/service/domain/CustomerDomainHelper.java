@@ -36,6 +36,7 @@ public class CustomerDomainHelper {
         CustomerCreatedEvent customerCreatedEvent = this.customerDomainService.validateAndCreateCustomer(customer,usernameExists);
 
         saveCustomer(customer);
+
         log.info("CustomerCreatedEvent: Customer is created with id: {}",customerCreatedEvent.getCustomer().getId().getValue());
         return  customerCreatedEvent;
     }
@@ -70,13 +71,13 @@ public class CustomerDomainHelper {
         return customerData.isPresent();
     }
 
-    private void saveCustomer(Customer customer) {
+    private Customer saveCustomer(Customer customer) {
         Customer savedCustomer = this.customerRepository.saveCustomer(customer);
         if(savedCustomer==null){
             log.error("Could not save customer with id : {}",savedCustomer.getId());
             throw  new CustomerDomainException("Could not save customer with id "+ customer.getId());
         }
 
-        this.customerRepository.saveCustomer(customer);
+        return savedCustomer;
     }
 }

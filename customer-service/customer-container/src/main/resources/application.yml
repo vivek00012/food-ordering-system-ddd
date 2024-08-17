@@ -1,6 +1,12 @@
 server:
   port: 8191
 
+logging:
+  level:
+    org: INFO
+    # Optionally, set the level for specific SLF4J-related packages
+    root: INFO
+    
 customer-service:
   customer-topic-name: customer
 
@@ -14,7 +20,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update  # or create, create-drop, validate
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true

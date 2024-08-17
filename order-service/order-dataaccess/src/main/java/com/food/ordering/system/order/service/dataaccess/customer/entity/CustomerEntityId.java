@@ -1,11 +1,10 @@
-package com.food.ordering.system.customer.service.dataaccess.entity;
+package com.food.ordering.system.order.service.dataaccess.customer.entity;
 
-import jakarta.persistence.Entity;
+
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,23 +13,16 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customers", schema = "customer")
-@IdClass(CustomerEntityId.class)
-@Entity
-public class CustomerEntity {
-
-    @Id
+public class CustomerEntityId implements Serializable {
     private UUID id;
-    @Id
+
     private String username;
-    private String firstName;
-    private String lastName;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomerEntity that = (CustomerEntity) o;
+        CustomerEntityId that = (CustomerEntityId) o;
         return Objects.equals(id, that.id) && Objects.equals(username, that.username);
     }
 

@@ -5,10 +5,28 @@ import com.food.ordering.system.order.service.dataaccess.customer.entity.Custome
 import com.food.ordering.system.order.service.domain.entity.Customer;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class CustomerDataAccessMapper {
 
     public Customer customerEntityToCustomer(CustomerEntity customerEntity){
-        return new Customer(new CustomerId(customerEntity.getId()));
+        return Customer.builder()
+                .customerId(new CustomerId(customerEntity.getId()))
+                .firstName(customerEntity.getFirstName())
+                .lastName(customerEntity.getLastName())
+                .username(customerEntity.getUsername())
+                .username(customerEntity.getUsername())
+                .build();
+
+    }
+
+    public CustomerEntity customerToCustomerEntity(Customer customer){
+        return CustomerEntity.builder()
+                .id(UUID.fromString(customer.getId().getValue().toString()))
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .username(customer.getUsername())
+                .build();
     }
 }

@@ -1,9 +1,13 @@
 server:
   port: 8183
 
+#logging:
+#  level:
+#    com.food.ordering.system: DEBUG
 logging:
   level:
-    com.food.ordering.system: DEBUG
+    # Optionally, set the level for specific SLF4J-related packages
+    root: INFO
 
 restaurant-service:
   restaurant-approval-request-topic-name: restaurant-approval-request
@@ -12,6 +16,8 @@ restaurant-service:
   outbox-scheduler-initial-delay: 10000
 
 spring:
+  main:
+    banner-mode: off
   datasource:
     url: jdbc:postgresql://localhost:5432/admin?currentSchema=restaurant&binaryTransfer=true&reWriteBatchedInserts=true
     username: postgres
@@ -21,7 +27,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update  # or create, create-drop, validate
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true

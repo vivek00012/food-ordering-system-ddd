@@ -51,8 +51,8 @@ public class Customer extends AggregateRoot<CustomerId> {
         private Builder() {
         }
 
-        public Builder id(CustomerId customerId) {
-            customerId = customerId;
+        public Builder id(CustomerId val) {
+            customerId = val;
             return this;
         }
 

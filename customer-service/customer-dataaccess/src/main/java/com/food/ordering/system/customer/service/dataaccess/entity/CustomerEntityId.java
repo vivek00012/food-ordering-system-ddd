@@ -2,6 +2,7 @@ package com.food.ordering.system.customer.service.dataaccess.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,9 +11,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEntityId {
+public class CustomerEntityId implements Serializable {
     private UUID id;
-    private  String username;
+
+    private String username;
 
     @Override
     public boolean equals(Object o) {
