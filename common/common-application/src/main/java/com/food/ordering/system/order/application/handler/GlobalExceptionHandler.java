@@ -6,12 +6,16 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.xml.validation.ValidatorHandler;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,6 +31,33 @@ public class GlobalExceptionHandler {
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .message("Unexpected error!")
                 .build();
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<ErrorDTO> handleMethodAArgumentNotValid(MethodArgumentNotValidException ex, WebRequest request){
+        String fieldErrors = ex.getFieldErrors().toString();// add list of errors converted to string
+        int count = ex.getErrorCount();// return error count
+
+        String error  = "Total Errors : "+ count + " ; "+ "First : "+ex.getFieldError().getDefaultMessage();
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(error)
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+
+    }
+    @ExceptionHandler
+    public final ResponseEntity<ErrorDTO> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request){
+        String fieldError = ex.getConstraintViolations().stream().map(err->err.getMessage()).findFirst().get();// add list of errors converted to string
+        int count = ex.getConstraintViolations().size();// return error count
+
+        String error  = "Total Errors : "+ count + " ; "+ "First : "+fieldError;
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(error)
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+
     }
 
     @ResponseBody
